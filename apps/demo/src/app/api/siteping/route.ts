@@ -35,8 +35,11 @@ const apiKey = process.env.SITEPING_API_KEY || undefined;
 export const { GET, POST, PATCH, DELETE, OPTIONS } = createSitepingHandler({
   store,
   apiKey,
+  // Without an apiKey the destructive endpoints (PATCH/DELETE) stay open.
+  // In production, set SITEPING_API_KEY to restrict them.
+  requireAuthForDestructive: !!apiKey,
   // webhooks: [
   //   ...(SLACK_WEBHOOK ? [{ url: SLACK_WEBHOOK, type: "slack" as const }] : []),
-  //   ...(DISCORD_WEBHOOK ? [{ url: DISCORD_WEBHOOK, type: "discord" as const }] : []),
+  //   ...(DISCORD_WEBHOOK ? [{ url: DISCORD_WEBHOOK, type: "slack" as const }] : []),
   // ],
 });
