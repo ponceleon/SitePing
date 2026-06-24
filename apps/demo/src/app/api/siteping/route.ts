@@ -1,4 +1,5 @@
-import { createSitepingHandler } from "@siteping/adapter-prisma";
+import { createSitepingHandler, PrismaStore } from "@siteping/adapter-prisma";
+import { PrismaClient } from "@prisma/client";
 import { memoryStore } from "@/lib/memory-store";
 
 // Webhook notifications — uncomment to ping Slack/Discord on each new feedback.
@@ -7,11 +8,27 @@ import { memoryStore } from "@/lib/memory-store";
 // const SLACK_WEBHOOK = process.env.SITEPING_SLACK_WEBHOOK;
 // const DISCORD_WEBHOOK = process.env.SITEPING_DISCORD_WEBHOOK;
 
+//
+// ─── Backend store ────────────────────────────────────────────────────────────
+// Railway: add a PostgreSQL service → DATABASE_URL is injected automatically.
+// No DATABASE_URL = in-memory store (data resets on restart — fine for eval).
+//
+const databaseUrl = process.env.DATABASE_URL;
+const store =
+  databaseUrl
+    ? new PrismaStore(new PrismaClient({ datasourceUrl: databaseUrl }))
+    : memoryStore;
+
+//
+// ─── API security ─────────────────────────────────────────────────────────────
+// Production: set SITEPING_API_KEY to protect GET/PATCH/DELETE.
+// POST stays open (the browser widget submits from unauthenticated contexts).
+//
+const apiKey = process.env.SITEPING_API_KEY || undefined;
+
 export const { GET, POST, PATCH, DELETE, OPTIONS } = createSitepingHandler({
-  store: memoryStore,
-  // Demo only: everyone can wipe the in-memory store. Never do this on a
-  // real deployment — set `apiKey` instead.
-  requireAuthForDestructive: false,
+  store,
+  apiKey,
   // webhooks: [
   //   ...(SLACK_WEBHOOK ? [{ url: SLACK_WEBHOOK, type: "slack" as const }] : []),
   //   ...(DISCORD_WEBHOOK ? [{ url: DISCORD_WEBHOOK, type: "discord" as const }] : []),

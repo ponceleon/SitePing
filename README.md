@@ -17,8 +17,9 @@ Draw rectangles, leave comments, track bugs — directly on the live site.
 [![build](https://img.shields.io/github/actions/workflow/status/NeosiaNexus/SitePing/ci.yml?style=flat&colorA=000000&colorB=000000)](https://github.com/NeosiaNexus/SitePing/actions)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue)](https://www.typescriptlang.org/)
 [![Bundle Size](https://img.shields.io/badge/widget-%E2%89%A454%20KB%20gzip%20(ESM)-blue)](./packages/widget/.size-limit.json)
+[![Deploy on Railway](https://img.shields.io/badge/Deploy%20on-Railway-0B0D0E?logo=railway)](https://railway.com/new/template/REPLACE_WITH_TEMPLATE_ID)
 
-[Getting Started](#getting-started) &middot; [Configuration](#configuration) &middot; [API Reference](#api-reference) &middot; [CLI](#cli) &middot; [Architecture](#architecture)
+[Getting Started](#getting-started) &middot; [Deploy on Railway](#deploy-on-railway) &middot; [Configuration](#configuration) &middot; [API Reference](#api-reference) &middot; [CLI](#cli) &middot; [Architecture](#architecture)
 
 </div>
 
@@ -59,6 +60,21 @@ Stop chasing client feedback across Slack threads, email chains, and Notion docs
 - **Monorepo** — Split into independent packages (`widget`, `adapter-prisma`, `adapter-memory`, `adapter-localstorage`, `cli`)
 - **Dev-only by default** — Widget auto-hides in production unless `forceShow: true`
 - **Lightweight** — ~49 KB gzipped today; after the upcoming bundle split (in progress), target is ~30 KB gzipped on first paint
+
+---
+
+## Deploy on Railway
+
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/new/template/REPLACE_WITH_TEMPLATE_ID)
+
+One-click deploy with a managed PostgreSQL database. No configuration needed.
+
+1. Click the **Deploy on Railway** button above
+2. Connect your GitHub account (if not already connected)
+3. (Optional) Add a PostgreSQL service for persistent storage — the app works with an in-memory store by default
+4. Set `SITEPING_API_KEY` in production to protect the API
+
+That's it. Your SitePing instance will be live in a few minutes.
 
 ---
 

@@ -13,6 +13,7 @@
     "node": ">=20"
   },
   "dependencies": {
+    "@prisma/client": "^7.8.0",
     "@siteping/adapter-memory": "workspace:*",
     "@siteping/adapter-prisma": "workspace:*",
     "@siteping/widget": "workspace:*",
@@ -20,6 +21,9 @@
     "next": "^16.2.6",
     "react": "^19.2.6",
     "react-dom": "^19.0.0"
+  },
+  "prisma": {
+    "schema": "prisma/schema.prisma"
   },
   "devDependencies": {
     "@siteping/core": "workspace:*",

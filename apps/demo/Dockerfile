@@ -9,6 +9,7 @@ RUN bun run --filter='@siteping/core' build && \
     bun run --filter='@siteping/widget' build && \
     bun run --filter='@siteping/adapter-memory' build && \
     bun run --filter='@siteping/adapter-prisma' build
+RUN cd apps/demo && bunx prisma generate
 RUN cd apps/demo && bun run build
 
 # --- Runner ---

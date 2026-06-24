@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SitepingFeedback {
+  id          String   @id @default(cuid())
+  projectName String
+  type        String
+  message     String
+  status      String   @default("open")
+  url         String
+  diagnostics Json?
+  viewport    String
+  userAgent   String
+  authorName  String
+  authorEmail String
+  clientId    String   @unique
+  resolvedAt  DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  annotations SitepingAnnotation[]
+}
+
+model SitepingAnnotation {
+  id               String   @id @default(cuid())
+  feedbackId       String
+  feedback         SitepingFeedback @relation(fields: [feedbackId], references: [id], onDelete: Cascade)
+  cssSelector      String
+  xpath            String
+  textSnippet      String
+  elementTag       String
+  elementId        String?
+  textPrefix       String
+  textSuffix       String
+  fingerprint      String
+  neighborText     String
+  xPct             Float
+  yPct             Float
+  wPct             Float
+  hPct             Float
+  scrollX          Float
+  scrollY          Float
+  viewportW        Int
+  viewportH        Int
+  devicePixelRatio Float    @default(1)
+  createdAt        DateTime @default(now())
+}
