@@ -1,5 +1,7 @@
 import { createSitepingHandler, PrismaStore } from "@siteping/adapter-prisma";
 import { PrismaClient } from "@prisma/client";
+import { Pool } from "pg";
+import { PrismaPg } from "@prisma/adapter-pg";
 import { memoryStore } from "@/lib/memory-store";
 
 // Webhook notifications — uncomment to ping Slack/Discord on each new feedback.
@@ -16,7 +18,11 @@ import { memoryStore } from "@/lib/memory-store";
 const databaseUrl = process.env.DATABASE_URL;
 const store =
   databaseUrl
-    ? new PrismaStore(new PrismaClient({ datasourceUrl: databaseUrl }))
+    ? new PrismaStore(
+        new PrismaClient({
+          adapter: new PrismaPg(new Pool({ connectionString: databaseUrl })),
+        }),
+      )
     : memoryStore;
 
 //
