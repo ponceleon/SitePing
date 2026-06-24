@@ -2,7 +2,7 @@ FROM oven/bun:1.3.11-alpine AS builder
 RUN apk add --no-cache nodejs
 WORKDIR /app
 COPY . .
-RUN bun install --frozen-lockfile
+RUN bun install
 
 # Build workspace packages then demo
 RUN bun run --filter='@siteping/core' build && \
