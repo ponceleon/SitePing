@@ -5,9 +5,6 @@
   },
   "deploy": {
     "healthcheckPath": "/api/siteping",
-    "healthcheckTimeout": 300,
-    "preDeployCommand": [
-      "cd apps/demo && bunx prisma db push --accept-data-loss"
-    ]
+    "healthcheckTimeout": 300
   }
 }
