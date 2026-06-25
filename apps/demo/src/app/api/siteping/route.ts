@@ -20,7 +20,12 @@ const store =
   databaseUrl
     ? new PrismaStore(
         new PrismaClient({
-          adapter: new PrismaPg(new Pool({ connectionString: databaseUrl })),
+          adapter: new PrismaPg(
+            new Pool({
+              connectionString: databaseUrl,
+              ssl: { rejectUnauthorized: false },
+            }),
+          ),
         }),
       )
     : memoryStore;
